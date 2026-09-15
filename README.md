@@ -23,9 +23,32 @@ Plain renewals and family-share purchases are deliberately silent (tune this in 
 ## How it works
 
 ```
-purchase ──▶ RevenueCat webhook ──▶ busybarRevenueCatWebhook ──▶ api.busy.app ──▶ 💡🔊
-                                        (Cloud Function)
-RevenueCat Charts API (v3) ◀── busybarMetricsRefresh (every minute) ──▶ api.busy.app ──▶ 📊
+    purchase                                                     every minute
+        │                                                             │
+        ▼                                                             ▼
+  ┌────────────┐              ┌──────────────────────────┐    ┌───────────────────────┐
+  │ RevenueCat │ ────────────▶│ busybarRevenueCatWebhook │    │ busybarMetricsRefresh │
+  └────────────┘   webhook    │      Cloud Function      │    │     Cloud Function    │
+                              └───┬──────────────────┬───┘    └───┬───────────────┬───┘
+                                  │                  │            │               │
+                   mirror, retry- │        announce  │            │     draw the  │
+                   dedupe by id   ▼                  │  fetch v3  │    3 screens  │
+                  ┌─────────────┐                    │  metrics   ▼               │
+                  │ Realtime DB │                    │     ┌─────────────────┐    │
+                  └─────────────┘                    │     │ RevenueCat      │    │
+                                                     │     │ Charts API (v3) │    │
+                                                     │     └─────────────────┘    │
+                                                     ▼                            ▼
+                                           ┌───────────────────────────────────────────┐
+                                           │                api.busy.app               │
+                                           └─────────────────────┬─────────────────────┘
+                                                                 │
+                                                                 ▼
+                                               ┌────────────────────────────────────┐
+                                               │  ▓▓░   NEW SUB                     │  + LED blink
+                                               │  ▓▓▓         +$4.99                │  + sound
+                                               └────────────────────────────────────┘
+                                                               BUSY Bar
 ```
 
 - **`busybarRevenueCatWebhook`** verifies the webhook's Authorization header, dedupes RevenueCat's retries via a tiny Realtime Database mirror (a single `latest` node — the database never grows), classifies the event, and draws/plays on the bar through the BUSY cloud API.
