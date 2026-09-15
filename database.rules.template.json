@@ -1,0 +1,9 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "busybar": {
+      "__CHANNEL__": { ".read": true }
+    }
+  }
+}

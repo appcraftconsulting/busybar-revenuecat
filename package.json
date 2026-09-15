@@ -1,0 +1,14 @@
+{
+  "name": "busybar-revenuecat",
+  "version": "1.0.0",
+  "description": "Live RevenueCat metrics and purchase announcements on a BUSY Bar desk display",
+  "type": "module",
+  "license": "MIT",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "start": "node revbar.mjs",
+    "sounds": "node revbar.mjs sounds",
+    "test-sound": "node revbar.mjs test-sound",
+    "test-display": "node revbar.mjs test-display"
+  }
+}

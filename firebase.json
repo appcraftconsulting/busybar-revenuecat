@@ -1,0 +1,11 @@
+{
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "busybar"
+    }
+  ],
+  "database": {
+    "rules": "database.rules.json"
+  }
+}
