@@ -2,21 +2,22 @@
 
 Live [RevenueCat](https://www.revenuecat.com) metrics on a [BUSY Bar](https://busy.app) desk display, with a sound and a color-coded flash for every purchase. Runs entirely in the cloud (Firebase Functions + the BUSY cloud API) — no computer needs to stay on.
 
-The 72×16 front LED cycles three screens (~20s each), titles colored with RevenueCat's own dashboard tokens:
+The 72×16 front LED cycles three screens (~20s each), titles colored with RevenueCat's own dashboard tokens (actual framebuffer captures):
 
-```
-[logo] USERS TODAY    [logo] REV TODAY    [logo]  MRR
-          1828                $399.87            $2,861
-```
+<p align="center">
+  <img src="docs/screen-users.png" width="32%" alt="USERS TODAY screen">
+  <img src="docs/screen-revenue.png" width="32%" alt="REV TODAY screen">
+  <img src="docs/screen-mrr.png" width="32%" alt="MRR screen">
+</p>
 
 Purchases flash a typed announcement matching the RevenueCat app's transaction badges, blink the status LED in the same color, and play a sound:
 
-| Event | Label | Color |
+| Event | Announcement | Badge color |
 |---|---|---|
-| Trial started | `TRIAL FREE` | orange `#E79462` |
-| New paid subscription | `NEW SUB +$4.99` | blue `#576CDB` |
-| One-time purchase | `ONE TIME +$59.99` | violet `#A987D1` |
-| Trial converted | `CONVERSION +$34.99` | green `#11D483` |
+| Trial started | <img src="docs/announce-trial.png" width="240" alt="TRIAL FREE"> | orange `#E79462` |
+| New paid subscription | <img src="docs/announce-newsub.png" width="240" alt="NEW SUB +$4.99"> | blue `#576CDB` |
+| One-time purchase | <img src="docs/announce-onetime.png" width="240" alt="ONE TIME +$59.99"> | violet `#A987D1` |
+| Trial converted | <img src="docs/announce-conversion.png" width="240" alt="CONVERSION +$34.99"> | green `#11D483` |
 
 Plain renewals and family-share purchases are deliberately silent (tune this in `busyClassifyEvent`).
 
